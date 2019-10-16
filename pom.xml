@@ -24,7 +24,20 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.indvd00m.ascii.render</groupId>
+      <artifactId>ascii-render</artifactId>
+      <version>2.1.2</version>
+    </dependency>
+
   </dependencies>
+
+  <modules>
+    <module>GUI</module>
+    <module>IO</module>
+    <module>Main</module>
+  </modules>
 
   <build>
     <pluginManagement>
@@ -66,14 +79,32 @@
           <version>3.7.1</version>
         </plugin>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.6.0</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>java</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <mainClass>fr.miage.main.Main</mainClass>
+            <systemProperties>
+              <systemProperty>
+                <key>myproperty</key>
+                <value>myvalue</value>
+              </systemProperty>
+            </systemProperties>
+          </configuration>
+        </plugin>
+        <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
   </build>
-<modules>  <module>GUI</module>
-    <module>IO</module>
-    <module>Main</module>
-  </modules>
+
 </project>
