@@ -17,7 +17,12 @@ public class IOTest
     @Test
     public void loadTest()
     {
-        boolTest=IO.load("src/test/java/fr/miage/io/grid_test.txt");
+        //test avec la grille en ressources
+        boolTest=IO.load("");
         assertEquals(true, boolTest);
+
+        //test avec le chemin absolu vers un fichier
+        boolTest=IO.load("src/test/resources/grid_test.txt");
+        assertEquals(true,boolTest );
     }
 }
