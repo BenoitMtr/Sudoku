@@ -1,28 +1,28 @@
 package fr.miage.gui;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit test for simple App.
  */
 public class GUITest
 {
-    /**
-     * Rigorous Test :-)
-     */
+    GUI guiTest=new GUI();
+
+    String[] coupTest=new String[2];
 
     @Test
     public void getCoupJoueTest()
     {
         ByteArrayInputStream in = new ByteArrayInputStream("129".getBytes());
         System.setIn(in);
+        coupTest=guiTest.getCoupJoue();
 
-        assertEquals("129",GUI.getCoupJoue());
+        assertEquals("129",coupTest[0]);
     }
 
 }

@@ -15,7 +15,12 @@ import java.util.Scanner;
  */
 public class GUI
 {
-    public static void afficherGrille(char[][] grille)
+    public GUI()
+    {
+
+    }
+
+    public void afficherGrille(char[][] grille)
     {
         IRender render = new Render();
         IContextBuilder builder = render.newBuilder();
@@ -35,22 +40,27 @@ public class GUI
         System.out.println(s);
     }
 
-    public static String getCoupJoue()
+    public String[] getCoupJoue()
     {
         Scanner scanner=new Scanner(System.in);
         System.out.println("Entrez votre coup, dans l'ordre 'ligne, colonne, chiffre':");
-        String coup=scanner.nextLine();
+        String[] coup=scanner.nextLine().split(" ");
+
+        try
+        {
+            if(Integer.parseInt(coup[0])!=0 && coup[0].length()!=3) coup[0]="";
+
+        }
+        catch(NumberFormatException e)
+        {
+        }
 
         return coup;
     }
 
-    public static void error(String message)
+    public void error(String message)
     {
         System.out.println(message);
     }
 
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
 }

@@ -1,5 +1,7 @@
 package fr.miage.io;
 
+import fr.miage.gui.GUI;
+
 import java.io.*;
 
 /**
@@ -8,16 +10,19 @@ import java.io.*;
  */
 public class IO
 {
-    static char[][] grille = new char[9][9];
 
+    public IO()
+    {
+
+    }
     /**
      * load: permet de charger une grille de sudoku, depuis un fichier txt dont le lien est précisé en paramètre
      * @param path
      * @return boolean that indicates if the load succeeded
      */
-    public static boolean load(String path)
+    public char[][] load(String path)
     {
-
+        char[][] tmpGrille = new char[9][9];
         if(path=="") //quand on veut charger une grille depuis resources
         {
             InputStream is = IO.class.getResourceAsStream("/grid.txt");
@@ -36,7 +41,7 @@ public class IO
 
                     if (current == '_') current = ' ';
 
-                    grille[row][col] = current;
+                    tmpGrille[row][col] = current;
                     col++;
 
                     if (col == 9) {
@@ -51,27 +56,28 @@ public class IO
             {
                 System.out.println("Chemin incorrect pour grille resources.");
                 e.printStackTrace();
-                return false;
+                return new char[9][9];
             }
         }
 
        else if(path!="" && path.substring(path.length()-3).equals("txt"))
         {
+            System.out.println("Chargement de "+path);
             try {
                 FileInputStream fis = new FileInputStream(new File(path));
 
                 char current = ' ';
                 int row = 0, col = 0;
-                while (fis.available() > 0) {
-                    current = (char) fis.read();
 
+                while (fis.available() != 0) {
+                    current = (char) fis.read();
                     while (!Character.isDigit(current) && current != '_') {
                         current = (char) fis.read();
                     }
 
                     if (current == '_') current = ' ';
 
-                    grille[row][col] = current;
+                    tmpGrille[row][col] = current;
                     col++;
 
                     if (col == 9) {
@@ -80,31 +86,88 @@ public class IO
                     }
                     if (row == 9) row = 0;
 
-
                 }
+                fis.close();
             }
             catch(IOException e)
             {
                 System.out.println("Chemin incorrect.");
                 e.printStackTrace();
-                return false;
+                return new char[9][9];
             }
         }
         else
         {
             System.out.println("Type de fichier incorrect, veuillez entrer un lien vers un fichier .txt");
-            return false;
+            return new char[9][9];
         }
-    return true;
+    return tmpGrille;
     }
 
-   public static char[][] getGrille()
+    public void save(char[][] grille, String path)
     {
-        return grille;
+        if(!path.substring(path.length()-3).equals("txt"))
+        {
+            new GUI().error("Le format de fichier choisi n'est pas correct. Veuillez entrer un nom de fichier au format txt.");
+        }
+        else
+        {
+            File sauvegarde = new File(path);
+            boolean exists = sauvegarde.exists();
+
+            if(exists)
+            {
+                try
+                {
+                    FileOutputStream fos = new FileOutputStream(new File(path));
+
+                    char current = ' ';
+
+                    for(int row=0;row<9;row++)
+                    {
+                        for(int col=0;col<9;col++)
+                        {
+                            current=grille[row][col];
+                            if(current==' ') current='_';
+                            fos.write(current);
+                        }
+                        if(row==8)  fos.close();
+                        else fos.write('\n');
+                    }
+                    }
+                 catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            else
+            {
+                try {
+                    sauvegarde.createNewFile();
+                    FileOutputStream fos = new FileOutputStream(new File(path));
+
+                    char current = ' ';
+
+                    for(int row=0;row<9;row++)
+                    {
+                        for(int col=0;col<9;col++)
+                        {
+                            current=grille[row][col];
+                            if(current==' ') current='_';
+                            fos.write(current);
+                        }
+                        if(row==8)  fos.close();
+                        else fos.write('\n');
+                    }
+
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
 }

@@ -3,11 +3,7 @@ package fr.miage.main;
 import fr.miage.gui.GUI;
 import fr.miage.io.IO;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
+import java.util.Arrays;
 
 /**
  * Hello world!
@@ -15,73 +11,45 @@ import java.net.URL;
  */
 public class Main
 {
-    public static boolean verifCoup(char[][] grille, int ligne, int colonne, int chiffre)
-    { int rowZone,colZone;
-        //boucles for pour vérifier sur ligne et colonne
-        for(int col=0;col<9;col++)
-        {
-            if(Character.getNumericValue(grille[ligne][col])==chiffre) return false;
-        }
-        for(int row=0;row<9;row++)
-        {
-            if(Character.getNumericValue(grille[row][colonne])==chiffre) return false;
-        }
-
-       //détermination de la zone où tester la validité du coup
-        if(ligne<=2) rowZone=0; //cas où on est dans la première zone
-        else rowZone=ligne-(ligne-3); //cas où on est dans une des 8 autres zones
-
-        if(colonne<=2) colZone=0;
-        else colZone=colonne-(colonne-3);
-
-        //boucles for pour vérifier sur zone 3x3
-        for(int zoneR=rowZone;zoneR<(rowZone+3);zoneR++)
-        {
-            for(int zoneC=colZone;zoneC<(colZone+3);zoneC++)
-            {
-                if(Character.getNumericValue(grille[zoneR][zoneC])==chiffre) return false;
-            }
-        }
-
-        return true;
-    }
-
-    public static boolean isCompleted(char[][] grille)
-    {
-        for(int row=0;row<9;row++)
-        {
-            for(int col=0;col<9;col++)
-            {
-                if(!Character.isDigit(grille[row][col])) return false;
-            }
-        }
-        return true;
-    }
-
     public static void main( String[] args )
     {
-        int selecLigne,selecCol,chiffre;
+        Plateau sudoku;
+        IO io=new IO();
+        GUI gui=new GUI();
         char[][] grille = null;
-        String coup;
+        String[] idCoup;
+        String coupNombre;
 
-        System.out.println("Chargement de la grille. . .");
-        if(args.length>0) IO.load(args[0]);
-        else IO.load("");
-        grille=IO.getGrille();
+        System.out.println("Chargement de la grille . . .");
+        if(args.length>0) grille=io.load(args[0]); //un chemin vers un fichier est précisé en paramètre
+        else grille=io.load(""); //on va charger une grille depuis resources
 
-        while(!isCompleted(grille))
+        sudoku=new Plateau(grille);
+
+        while(!sudoku.isCompleted(sudoku.getGrille()))
         {
-            GUI.afficherGrille(grille);
-            coup= GUI.getCoupJoue();
-            selecLigne=Character.getNumericValue(coup.charAt(0));
-            selecCol=Character.getNumericValue(coup.charAt(1));
-            chiffre=Character.getNumericValue(coup.charAt(2));
+            gui.afficherGrille(sudoku.getGrille());
+            idCoup= new Coup(gui.getCoupJoue()).getId();
 
-            boolean valide=verifCoup(grille,selecLigne-1,selecCol-1,chiffre);
+            if(idCoup.length==0)
+            {
+                gui.error("Le coup joué n'est pas valide.");
+            }
+            else
+            {
+                switch(idCoup[0])
+                {
+                    //TODO: un case si on veut quitter le jeu en plein milieu de la partie
+                    case "save": io.save(sudoku.getGrille(),idCoup[1]); break;
+                    case "load": sudoku.setGrille(io.load(idCoup[1])); break;
+                    default:  coupNombre=Arrays.toString(idCoup);
+                        coupNombre=coupNombre.substring(1,coupNombre.length()-1);
+                        sudoku.jouerCoup(sudoku.getGrille(), coupNombre); break;
+                }
 
-            if(valide) grille[selecLigne-1][selecCol-1]= (char)(chiffre+'0');
-            else GUI.error("Le coup entré n'est pas valide, veuillez en entrer un autre.");
-}
+            }
+
+        }
 
     }
 }
