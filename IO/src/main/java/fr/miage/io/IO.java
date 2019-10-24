@@ -5,8 +5,7 @@ import fr.miage.gui.GUI;
 import java.io.*;
 
 /**
- * Hello world!
- *
+ * IO: Classe chargée des entrées sorties sur le disque
  */
 public class IO
 {
@@ -16,13 +15,14 @@ public class IO
 
     }
     /**
-     * load: permet de charger une grille de sudoku, depuis un fichier txt dont le lien est précisé en paramètre
+     * load: permet de charger une grille de sudoku, depuis un fichier txt dont le lien est précisé en paramètre, ou depuis les ressources du projet
      * @param path
-     * @return boolean that indicates if the load succeeded
+     * @return la grille chargée depuis le fichier/ressource
      */
     public char[][] load(String path)
     {
         char[][] tmpGrille = new char[9][9];
+
         if(path=="") //quand on veut charger une grille depuis resources
         {
             InputStream is = IO.class.getResourceAsStream("/grid.txt");
@@ -35,6 +35,7 @@ public class IO
                 while ((value=reader.read())!=-1) {
                     current = (char) value;
 
+                    //on skip les caractères invisibles
                     while (!Character.isDigit(current) && current != '_') {
                         current = (char) reader.read();
                     }
@@ -60,7 +61,7 @@ public class IO
             }
         }
 
-       else if(path!="" && path.substring(path.length()-3).equals("txt"))
+       else if(path!="" && path.substring(path.length()-3).equals("txt")) //si on veut charger une grille au format txt depuis un fichier
         {
             System.out.println("Chargement de "+path);
             try {
@@ -71,6 +72,8 @@ public class IO
 
                 while (fis.available() != 0) {
                     current = (char) fis.read();
+
+                    //on skip les caractères invisibles
                     while (!Character.isDigit(current) && current != '_') {
                         current = (char) fis.read();
                     }
@@ -104,6 +107,11 @@ public class IO
     return tmpGrille;
     }
 
+    /**
+     * save: permet de sauvegarder la grille de sudoku sur laquelle on joue, dans un fichier texte
+     * @param grille: la grille sur laquelle on est en train de jouer
+     * @param path: le chemin vers le fichier dans lequel on veut sauvegarder notre partie
+     */
     public void save(char[][] grille, String path)
     {
         if(!path.substring(path.length()-3).equals("txt"))
@@ -115,7 +123,7 @@ public class IO
             File sauvegarde = new File(path);
             boolean exists = sauvegarde.exists();
 
-            if(exists)
+            if(exists) //si le fichier indiqué par le chemin existe déjà, on l'ouvre et on le réécrit
             {
                 try
                 {
@@ -140,7 +148,7 @@ public class IO
                 }
 
             }
-            else
+            else //sinon on le crée
             {
                 try {
                     sauvegarde.createNewFile();

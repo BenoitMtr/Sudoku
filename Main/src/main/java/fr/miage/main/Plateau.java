@@ -2,6 +2,10 @@ package fr.miage.main;
 
 import fr.miage.gui.GUI;
 
+/**
+ * Plateau: Classe représentant la grille de sudoku
+ */
+
 public class Plateau {
 
     char[][] grille;
@@ -12,15 +16,32 @@ public class Plateau {
 
     }
 
+    /**
+     * getGrille: récupère la grille de sudoku actuelle
+     * @return la grille de sudoku actuelle
+     */
     public char[][] getGrille()
     {
         return grille;
     }
 
+    /**
+     * setGrille
+     * @param grille: la nouvelle grille
+     */
     public void setGrille(char[][] grille) {this.grille=grille;}
 
+    /**
+     * verifCoup: vérifie que le coup joué soit valide ou non
+     * @param grille: la grille de sudoku actuelle
+     * @param ligne: la ligne jouée
+     * @param colonne: la colonne jouée
+     * @param chiffre: le chiffre à placer
+     * @return true si c'est valide, false si non
+     */
     public static boolean verifCoup(char[][] grille, int ligne, int colonne, int chiffre)
-    { int rowZone,colZone;
+    {
+        int rowZone,colZone;
         //boucles for pour vérifier sur ligne et colonne
         for(int col=0;col<9;col++)
         {
@@ -50,6 +71,12 @@ public class Plateau {
         return true;
     }
 
+    /**
+     * isCompleted: vérifie si la grille est complète ou non
+     * @param grille: la grille de sudoku actuelle
+     * @return true si elle est complète, false si non
+     */
+
     public boolean isCompleted(char[][] grille)
     {
         for(int row=0;row<9;row++)
@@ -62,6 +89,11 @@ public class Plateau {
         return true;
     }
 
+    /**
+     * jouerCoup: permet de jouer le coup entré sur la console
+     * @param grille: la grille de sudoku actuelle
+     * @param coup: la série de chiffres jouée
+     */
     public void jouerCoup(char[][] grille, String coup)
     {
         int selecLigne,selecCol,chiffre;
