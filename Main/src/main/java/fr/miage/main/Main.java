@@ -20,7 +20,6 @@ public class Main
         String[] idCoup;
         String coupNombre;
 
-        System.out.println("Chargement de la grille . . .");
         if(args.length>0) grille=io.load(args[0]); //un chemin vers un fichier est précisé en paramètre
         else grille=io.load(""); //on va charger une grille depuis resources
 
@@ -39,9 +38,9 @@ public class Main
             {
                 switch(idCoup[0])
                 {
-                    //TODO: un case si on veut quitter le jeu en plein milieu de la partie
                     case "save": io.save(sudoku.getGrille(),idCoup[1]); break;
                     case "load": sudoku.setGrille(io.load(idCoup[1])); break;
+                    case "exit": System.exit(0); break;
                     default:  coupNombre=Arrays.toString(idCoup);
                         coupNombre=coupNombre.substring(1,coupNombre.length()-1);
                         sudoku.jouerCoup(sudoku.getGrille(), coupNombre); break;

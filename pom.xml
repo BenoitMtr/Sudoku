@@ -99,7 +99,8 @@
             </execution>
           </executions>
           <configuration>
-            <mainClass>fr.miage.main.Main</mainClass>
+           <skip>true</skip>
+            <mainClass>**undefined**</mainClass>
             <systemProperties>
               <systemProperty>
                 <key>myproperty</key>
@@ -112,6 +113,7 @@
           <artifactId>maven-assembly-plugin</artifactId>
           <version>2.2-beta-2</version>
           <configuration>
+            <skipAssembly>true</skipAssembly>
             <descriptorRefs>
               <descriptorRef>
                 jar-with-dependencies
@@ -124,7 +126,6 @@
             </archive>
           </configuration>
         </plugin>
-
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>

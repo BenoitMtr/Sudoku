@@ -97,9 +97,33 @@
           <version>3.0.0</version>
         </plugin>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.6.0</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>java</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <skip> false </skip>
+            <mainClass>fr.miage.main.Main</mainClass>
+            <systemProperties>
+              <systemProperty>
+                <key>myproperty</key>
+                <value>myvalue</value>
+              </systemProperty>
+            </systemProperties>
+          </configuration>
+        </plugin>
+        <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>2.2-beta-2</version>
           <configuration>
+            <finalName>${project.artifactId}-${project.version}</finalName>
+            <skipAssembly>false</skipAssembly>
             <descriptorRefs>
               <descriptorRef>
                 jar-with-dependencies
