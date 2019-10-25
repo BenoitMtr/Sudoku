@@ -2,6 +2,8 @@ package fr.miage.main;
 
 import fr.miage.gui.GUI;
 
+import java.util.ArrayList;
+
 /**
  * Plateau: Classe représentant la grille de sudoku
  */
@@ -92,9 +94,10 @@ public class Plateau {
     /**
      * jouerCoup: permet de jouer le coup entré sur la console
      * @param grille: la grille de sudoku actuelle
+     * @param listeCoups: la liste de tous les coups joués jusqu'à présent
      * @param coup: la série de chiffres jouée
      */
-    public void jouerCoup(char[][] grille, String coup)
+    public void jouerCoup(char[][] grille, String coup, ArrayList<String> listeCoups)
     {
         int selecLigne,selecCol,chiffre;
 
@@ -104,7 +107,41 @@ public class Plateau {
 
         boolean valide=verifCoup(grille,selecLigne-1,selecCol-1,chiffre);
 
-        if(valide) grille[selecLigne-1][selecCol-1]= (char)(chiffre+'0');
+        if(valide)
+        {
+            grille[selecLigne-1][selecCol-1]= (char)(chiffre+'0');
+            listeCoups.add(coup);
+        }
         else new GUI().error("Le coup entré n'est pas valide, veuillez en entrer un autre.");
+    }
+
+    /**
+     * annulerCoup: permet d'annuler le dernier coup joué
+     * @param grille: la grille de sudoku actuelle
+     * @param listeCoup: la liste des coups joués
+     */
+    public void annulerCoup(char[][] grille, ArrayList<String> listeCoup)
+    {
+        try{
+            String coupAAnnuler=listeCoup.get(listeCoup.size()-1);
+
+            //on efface la valeur contenu dans la case de la grille où le dernier coup a été joué
+            grille[Character.getNumericValue(coupAAnnuler.charAt(0))-1][Character.getNumericValue(coupAAnnuler.charAt(1))-1]=' ';
+
+            //on retire le dernier coup de la liste
+            listeCoup.remove(coupAAnnuler);
+
+            //on refait tous les coups contenu dans la liste
+            for(String s:listeCoup)
+            {
+                System.out.println(s);
+                grille[Character.getNumericValue(s.charAt(0))-1][Character.getNumericValue(s.charAt(1))-1]=s.charAt(2);
+            }
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+
+        }
+
     }
 }

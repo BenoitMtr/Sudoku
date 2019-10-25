@@ -2,6 +2,8 @@ package fr.miage.main;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PlateauTest {
@@ -33,6 +35,7 @@ public class PlateauTest {
 
     Plateau plateauTest=new Plateau(testGrille);
     String coupTest="129";
+    ArrayList<String> listeCoupsTest=new ArrayList<String>();
 
     @Test
     public void verifCoupTest()
@@ -56,7 +59,20 @@ public class PlateauTest {
     public void jouerCoupTest()
     {
         plateauTest.setGrille(testGrille);
-        plateauTest.jouerCoup(plateauTest.getGrille(),coupTest);
+        plateauTest.jouerCoup(plateauTest.getGrille(),coupTest,listeCoupsTest);
         assertEquals('9',testGrille[0][1]);
+    }
+
+    @Test
+    public void annulerCoupTest()
+    {
+        listeCoupsTest.add("129");
+        listeCoupsTest.add("124");
+        listeCoupsTest.add("122");
+
+        plateauTest.annulerCoup(plateauTest.getGrille(),listeCoupsTest);
+
+        assertEquals("124",listeCoupsTest.get(listeCoupsTest.size()-1));
+        assertEquals('4',plateauTest.getGrille()[0][1]);
     }
 }
