@@ -10,9 +10,9 @@ import com.indvd00m.ascii.render.elements.Table;
 import java.util.Scanner;
 
 /**
- * GUI: Classe chargée des entrées et sorties console
+ * Hello world!
+ *
  */
-
 public class GUI
 {
     public GUI()
@@ -20,11 +20,6 @@ public class GUI
 
     }
 
-    /**
-     * afficherGrille: affiche la grille de sudoku actuelle sur la console, en utilisant ASCII Render
-     * @param grille: la grille de sudoku actuelle
-     *
-     */
     public void afficherGrille(char[][] grille)
     {
         IRender render = new Render();
@@ -45,10 +40,6 @@ public class GUI
         System.out.println(s);
     }
 
-    /**
-     * getCoupJoue: permet d'entrer un coup sur la console, puis le renvoie
-     * @return le coup joué
-     */
     public String[] getCoupJoue()
     {
         Scanner scanner=new Scanner(System.in);
@@ -67,10 +58,6 @@ public class GUI
         return coup;
     }
 
-    /**
-     * error: affiche un message d'erreur
-     * @param message: le message à envoyer
-     */
     public void error(String message)
     {
         System.out.println(message);

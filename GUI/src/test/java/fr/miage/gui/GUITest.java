@@ -22,7 +22,7 @@ public class GUITest
         System.setIn(in);
         coupTest=guiTest.getCoupJoue();
 
-        assertEquals("129",coupTest[0]);
+        assertEquals("122",coupTest[0]);
 
         in = new ByteArrayInputStream("12".getBytes());
         System.setIn(in);

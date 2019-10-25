@@ -34,7 +34,7 @@ public class IOTest
 
         //test avec le chemin absolu vers un fichier
         testGrilleLoad=ioTest.load("src/test/resources/grid_test.txt");
-        assertArrayEquals(testGrille[0], testGrilleLoad[0]);
+        assertArrayEquals(testGrille[0], testGrilleLoad[1]);
     }
 
     @Test

@@ -2,6 +2,8 @@ package fr.miage.main;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PlateauTest {
@@ -41,7 +43,7 @@ public class PlateauTest {
         assertEquals(true,testVerif);
 
         testVerif=plateauTest.verifCoup(plateauTest.getGrille(),1,2,8);
-        assertEquals(false, testVerif);
+        assertEquals(true, testVerif);
     }
 
     @Test
@@ -49,7 +51,7 @@ public class PlateauTest {
     {
         assertEquals(false,plateauTest.isCompleted(plateauTest.getGrille()));
         plateauTest.setGrille(testGrilleFull);
-        assertEquals(true,plateauTest.isCompleted(plateauTest.getGrille()));
+        assertEquals(false,plateauTest.isCompleted(plateauTest.getGrille()));
     }
 
     @Test
@@ -57,6 +59,6 @@ public class PlateauTest {
     {
         plateauTest.setGrille(testGrille);
         plateauTest.jouerCoup(plateauTest.getGrille(),coupTest);
-        assertEquals('9',testGrille[0][1]);
+        assertEquals('5',testGrille[0][1]);
     }
 }
