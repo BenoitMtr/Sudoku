@@ -129,6 +129,8 @@
                 jar-with-dependencies
               </descriptorRef>
             </descriptorRefs>
+            <finalName>sudokuV1</finalName>
+            <appendAssemblyId>false</appendAssemblyId>
             <archive>
               <manifest>
                 <mainClass>fr.miage.main.Main</mainClass>
