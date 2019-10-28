@@ -3,6 +3,7 @@ package fr.miage.main;
 import fr.miage.gui.GUI;
 import fr.miage.io.IO;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -18,6 +19,7 @@ public class Main
         char[][] grille = null;
         String[] idCoup; //pour récupérer ce qui a été entré sur la console
         String coupNombre; //si le coup entré sur la console est une série de chiffres, on les stocke dans cette variable
+        ArrayList<String> listeCoups=new ArrayList<String>();
 
         if(args.length>0) grille=io.load(args[0]); //un chemin vers un fichier est précisé en paramètre
         else grille=io.load(""); //on va charger une grille depuis resources

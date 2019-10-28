@@ -2,6 +2,8 @@ package fr.miage.main;
 
 import fr.miage.gui.GUI;
 
+import java.util.ArrayList;
+
 /**
  * Plateau: Classe représentant la grille de sudoku
  */
@@ -104,7 +106,10 @@ public class Plateau {
 
         boolean valide=verifCoup(grille,selecLigne-1,selecCol-1,chiffre);
 
-        if(valide) grille[selecLigne-1][selecCol-1]= (char)(chiffre+'0');
+        if(valide)
+        {
+            grille[selecLigne-1][selecCol-1]= (char)(chiffre+'0');
+        }
         else new GUI().error("Le coup entré n'est pas valide, veuillez en entrer un autre.");
     }
 }
